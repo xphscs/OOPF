@@ -25,3 +25,8 @@ void debug_global_values()
     cout << "\n";
     cout << "gravity: " << gravity << endl;
 }
+
+void debug_particle(Pendel part)
+{
+    cout << part.pos.x << "\t\t" << part.pos.y << "\t\t" << part.pos.z << endl;
+}
