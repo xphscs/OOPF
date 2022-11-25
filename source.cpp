@@ -17,29 +17,40 @@ using std::sin;
 using std::cos;
 
 
-
-
-
 #include "project headers\PrivateLibraries.h"  // Incluyo los headers propios
+vector<Pendel> particles;                      // Creo el arreglo que guardará los péndulos dinámicamente
+
+
+#include "gl headers\GLIncludes.h"             // Incluyo los headers de OpenGL 
+
+
+
 
 int main(int cargs, char **vargs)
 {
-    
-    process_global_values(cargs, vargs);
+    // Proceso los valores ingresados por consola
+    generate_world(cargs, vargs, particles);
 
 
-    Pendel part = Pendel(initial_angle, initial_rope_lenght, 1);
+    // Inicializo Glut
+    glutInit(&cargs, vargs);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
+    glutInitWindowPosition(30, 10);
+    glutInitWindowSize(1280, 720);
+    glutCreateWindow("Simulador Onda de péndulos.");
 
-    double time = 0.0;
 
-    for (int i = 0; i < 1000; i++)
-    {   
-        time += dt;
+    // Inicializo OpenGL
+    glutDisplayFunc(display);
+    glutReshapeFunc(reshape);
+    glutTimerFunc(0, timer, 0);
+    init();
 
-        debug_particle(part);
-        part.fast_process(time);
+    debug("Información pre-display.");
+    debug_all_particles(particles);
 
-    }
+    debug("Se entra en el loop principal;");
+    glutMainLoop();
 
     return 0;
 }

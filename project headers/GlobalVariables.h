@@ -1,7 +1,7 @@
 #pragma once
 
 double initial_angle = 1.0;                     // Valores de las condiciones iniciales
-double initial_rope_lenght = 10.0;
+double initial_rope_lenght = 1.0;
 
 unsigned int no_particles = 10;                 // Forma del simulador
 double particles_horizontal_separation = 1.0;   
@@ -10,6 +10,8 @@ double particles_radius = 0.5;
 
 double time_speed = 1.0;                        // Velocidad del simulador
 double dt = 0.001;
+int simulator_fps = 64;
+double current_time = 0.0;
 
 double gravity = 9.81;                          // Valores universales del simulador
 double air_resistance = 0.0;
@@ -18,7 +20,7 @@ double air_resistance = 0.0;
 using std::atoi;                                // Funciones de cambio de string a numéricos
 using std::atof;
 
-using std::cout;                                
+using std::cout;       
 
 
 // Función para reescribir los valores globales del simulador

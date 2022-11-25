@@ -30,3 +30,11 @@ void debug_particle(Pendel part)
 {
     cout << part.pos.x << "\t\t" << part.pos.y << "\t\t" << part.pos.z << endl;
 }
+
+void debug_all_particles(std::vector<Pendel> particles)
+{
+    for (Pendel part : particles)
+    {
+        cout << part.pos.x << "\t\t" << part.pos.y << "\t\t" << part.pos.z << endl;
+    }
+}
