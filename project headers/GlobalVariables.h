@@ -1,3 +1,5 @@
+// Se guardan las varialbes globales que modelan la simulación, así como las funciones para procesar su entrada por consola
+
 #pragma once
 
 #include <cmath>

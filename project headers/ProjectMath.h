@@ -1,9 +1,11 @@
+// Objetos matemáticos que son útiles para el proyecto.
+
 
 #pragma once
 
 #include <cmath>
 
-// Clase Vector3 emula un vector tridimensional
+// Clase Vector3. Emula un vector tridimensional
 class Vector3
 {
     public:

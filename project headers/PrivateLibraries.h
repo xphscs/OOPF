@@ -1,3 +1,5 @@
+// se incluyen los headers del simulador
+
 #pragma once
 
 #include "GlobalVariables.h"            // Header de valores globales

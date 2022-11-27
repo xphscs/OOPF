@@ -1,3 +1,5 @@
+// Objetos que se tendrán en el simulador.
+
 #pragma once
 
 #include <cmath>
@@ -9,6 +11,8 @@ using std::pow;
 using std::exp;
 using std::asin;
 
+
+// Clase que simula un péndulo.
 class Pendel
 {
     public:
@@ -26,6 +30,7 @@ class Pendel
 
         Pendel(double pangle, double prope_lenght, int n)
         {
+            // Creo la longitud de la cuerda según el número del péndulo. De momento se tiene un crecimiento lineal, pero pienso agregar un crecimiento con diferentes funciones
             this -> rope_lenght = prope_lenght + (particles_vertical_separation * n);
 
             // -> pos.x = this -> x_amplitude = rope_lenght * sin(this -> angle);
@@ -40,6 +45,8 @@ class Pendel
             this -> grey_scale = ((double)n / (double)no_particles) / 2.0;
         }
 
+
+        // Función que simula el movimiento del péndulo según lo visto en clase. Sólo funciona con ángulos pequenos.
         void fast_process(double time)
         {
             this -> pos.x = exp(-damping_factor * time) * x_amplitude * cos(this -> omega * time);

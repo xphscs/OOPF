@@ -1,3 +1,5 @@
+// Herramientas de debugación (odio utilizar debugers clásicos, como buen linuxero prefiero hacer prints B))
+
 #pragma once
 
 using std::cout;
@@ -38,3 +40,4 @@ void debug_all_particles(std::vector<Pendel> particles)
         cout << part.pos.x << "\t\t" << part.pos.y << "\t\t" << part.pos.z << endl;
     }
 }
+

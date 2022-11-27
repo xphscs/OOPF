@@ -1,3 +1,5 @@
+// Aquí se encuentran las funciones encesarias para correr OpenGL
+
 #pragma once
 
 #ifdef __APPLE__                    // Incluyo OpenGL
@@ -10,17 +12,20 @@
 
 #include "..\project headers\GlobalVariables.h"
 
+// Variables de perspectiva
 GLdouble zNear;
 GLdouble zFar;
 GLfloat depth;
 GLdouble plane_offset = 50.0;
 
+// Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
 GLdouble zoffset = 10.0;
 
 
 // FUNCIONES DE PREPROCESAMIENTO DE LOS PARÁMETROS
 
 
+// Esta función se llama después de procesar los datos de consola en la función Init. Crea la perspectiva del mundo.
 void set_perspective()
 {
     GLdouble World_depth = no_particles * particles_horizontal_separation;
@@ -29,6 +34,8 @@ void set_perspective()
     zFar = -(depth - World_depth - plane_offset);
 }
 
+
+// Función de debug. Crea un plano cartesiano 3D para ver el comportamiento de las bolas de una forma más precisa
 void debug_cartesian_plane()
 {
     glMatrixMode(GL_MODELVIEW);
@@ -85,7 +92,7 @@ void display()
     //debug("Información post-display.");
     //debug_all_particles(particles);
 
-    // Se entra en el Loop
+    // Se entra en el Loop donde se renderizan los objetos según su posición
     for (int i = no_particles; i >= 0; i--)
     {
         glLoadIdentity();
@@ -115,7 +122,7 @@ void timer(int)
 {
     //debug("Se entra en la función TIMER.");
 
-    glutTimerFunc( 1, timer, 0);
+    glutTimerFunc(1, timer, 0);
 
     for (Pendel &particle : particles)
     {
@@ -130,7 +137,7 @@ void timer(int)
 }
 
 
-// Función de inicialización de GLUT
+// Función de inicialización de GLUT, donde se crea la matriz de perspectiva y otras cositas para preparas los gráficos.
 void init()
 {
     set_perspective();
@@ -141,7 +148,7 @@ void init()
 }
 
 
-// Función de resize (permite crear una ventana responsiva)
+// Función de resize (permite crear una ventana responsiva). Es llamada al iniciar la simulación, por lo que aquí creo la matriz de perspectiva.
 void reshape(int x, int y)
 {
     // debug("Se entra en la función RESHAPE.");
