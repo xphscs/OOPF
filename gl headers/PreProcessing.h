@@ -86,16 +86,17 @@ void display()
     //debug_all_particles(particles);
 
     // Se entra en el Loop
-    for (int i = 0; i < no_particles; i++)
+    for (int i = no_particles; i >= 0; i--)
     {
         glLoadIdentity();
 
         //std::cout << "Se translada partícula " << i + 1 << std::endl; 
         //debug_particle(particles[i]);
-        glTranslatef(particles[i].pos.x, particles[i].pos.y, -particles[i].pos.z + -zoffset);
+        glTranslatef(particles[i].pos.x, particles[i].pos.y, -particles[i].pos.z - 10.0);
         //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
         glScalef(1.0, 1.0, 1.0);
-        glColor3f(0.0, 0.0, 0.0);
+        double grey_color = particles[i].grey_scale;
+        glColor3f(grey_color, grey_color, grey_color);
 
         glutSolidSphere(particles_radius, 20, 20);
     }
@@ -114,7 +115,7 @@ void timer(int)
 {
     //debug("Se entra en la función TIMER.");
 
-    glutTimerFunc( int(100 / simulator_fps), timer, 0);
+    glutTimerFunc( 1, timer, 0);
 
     for (Pendel &particle : particles)
     {
@@ -143,7 +144,7 @@ void init()
 // Función de resize (permite crear una ventana responsiva)
 void reshape(int x, int y)
 {
-    debug("Se entra en la función RESHAPE.");
+    // debug("Se entra en la función RESHAPE.");
     if (x == 0 || y == 0){return;}
 
     glViewport(0, 0, x, y);
@@ -155,5 +156,5 @@ void reshape(int x, int y)
     gluPerspective(80.0, (GLdouble)x / (GLdouble)y, zNear, zFar);
 
     glMatrixMode(GL_MODELVIEW);
-    debug("Se sale de la función RESHAPE.");
+    // debug("Se sale de la función RESHAPE.");
 }

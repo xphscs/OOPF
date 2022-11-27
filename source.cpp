@@ -46,10 +46,10 @@ int main(int cargs, char **vargs)
     glutTimerFunc(0, timer, 0);
     init();
 
-    debug("Información pre-display.");
-    debug_all_particles(particles);
+    // debug("Información pre-display.");
+    // debug_all_particles(particles);
 
-    debug("Se entra en el loop principal;");
+    // debug("Se entra en el loop principal;");
     glutMainLoop();
 
     return 0;
