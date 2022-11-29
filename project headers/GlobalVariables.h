@@ -17,11 +17,15 @@ double particles_mass = 1.0;
 double time_speed = 1.0;                        // Velocidad del simulador
 int simulator_fps = 75;
 double dt = 1.0 / simulator_fps;
-double current_time = 0.0;
+long double current_time = 0.0;
 
 double gravity = 9.81;                          // Valores universales del simulador
-double air_resistance = 0.0000006;
+double air_resistance = 0.00006;
 double damping_factor = air_resistance / (2 * particles_mass);
+double treshold = 0.00001;
+int no_min_oscillations = 50;
+int no_max_oscillations = 65;
+double ciclying_time = 120.0;
 
 
 using std::atoi;                                // Funciones de cambio de string a numéricos
@@ -50,6 +54,7 @@ void write_global_values(string param, char *value)
     return;
 }
 
+
 // Función para procesar los parámetros escritos por consola
 bool process_global_values(int argc, char **argv)
 {
@@ -67,3 +72,11 @@ bool process_global_values(int argc, char **argv)
 	}
 }
 
+
+// Función que contiene la separación vertical de los péndulos
+double separation_function(int n)
+{
+    double pi = 3.14159265358;
+    double twopi = 2 * pi;
+    return gravity * pow((ciclying_time) / (twopi * (no_min_oscillations + n)), 2);
+}

@@ -30,12 +30,13 @@ class Pendel
         double x_amplitude, y_amplitude;
         double omega;
 
-        double max_y = sqrt(pow(initial_rope_lenght + ((no_particles - 1) / 2 * particles_vertical_separation), 2) - pow(initial_amplitude, 2));
+        double max_y = sqrt(pow(initial_rope_lenght + ((no_particles - 1) * particles_vertical_separation), 2) - pow(initial_amplitude, 2));
 
         Pendel(double pangle, double prope_lenght, int n)
         {
             // Creo la longitud de la cuerda según el número del péndulo. De momento se tiene un crecimiento lineal, pero pienso agregar un crecimiento con diferentes funciones
-            this -> rope_lenght = prope_lenght + (particles_vertical_separation * (double)n);
+            // this -> rope_lenght = prope_lenght + (particles_vertical_separation * (double)n);
+            this -> rope_lenght = separation_function(n);
 
             // -> pos.x = this -> x_amplitude = rope_lenght * sin(this -> angle);
             //  this -> pos.y = this -> y_amplitude = rope_lenght * cos(this -> angle) - (particles_vertical_separation * n);
@@ -48,7 +49,7 @@ class Pendel
 
             this -> grey_scale = ((double)(n + 1)/ (double)no_particles) / 2.0;
 
-            // std::cout << n << " with a period of: " << twopi / this -> omega  << std::endl;
+            std::cout << n << " with a rope of: " << this -> rope_lenght  << std::endl;
         }
 
 

@@ -10,6 +10,7 @@
 
 #include <vector>
 #include <chrono>
+#include <cmath>
 
 #include "..\project headers\GlobalVariables.h"
 
@@ -22,7 +23,6 @@ GLdouble plane_offset = 1.0;
 
 // Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
 GLdouble zoffset = 0.1;
-
 
 // FUNCIONES DE PREPROCESAMIENTO DE LOS PARÁMETROS
 
@@ -131,7 +131,7 @@ void timer(int)
         particles[i].fast_process(current_time);
     }
     
-    // debug_all_particles(particles);
+    //debug_all_particles(particles);
     current_time += dt;
 
     glutPostRedisplay();
