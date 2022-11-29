@@ -13,7 +13,7 @@ void generate_world(int argc, char **argv, std::vector<Pendel> &particles)
 
 
     // Genera las partículas
-    for (int i = 0; i <= no_particles; i++)
+    for (int i = 0; i < no_particles; i++)
     {
         particles.push_back(Pendel(initial_angle, initial_rope_lenght, i));
     }

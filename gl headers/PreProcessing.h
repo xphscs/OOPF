@@ -9,6 +9,7 @@
 #endif   
 
 #include <vector>
+#include <chrono>
 
 #include "..\project headers\GlobalVariables.h"
 
@@ -16,10 +17,11 @@
 GLdouble zNear;
 GLdouble zFar;
 GLfloat depth;
-GLdouble plane_offset = 50.0;
+GLfloat fovx;
+GLdouble plane_offset = 1.0;
 
 // Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
-GLdouble zoffset = 10.0;
+GLdouble zoffset = 0.1;
 
 
 // FUNCIONES DE PREPROCESAMIENTO DE LOS PARÁMETROS
@@ -28,10 +30,11 @@ GLdouble zoffset = 10.0;
 // Esta función se llama después de procesar los datos de consola en la función Init. Crea la perspectiva del mundo.
 void set_perspective()
 {
-    GLdouble World_depth = no_particles * particles_horizontal_separation;
-    zNear = 0.5;
-    depth = (zNear + World_depth + plane_offset);
-    zFar = -(depth - World_depth - plane_offset);
+    zNear = 0.01;
+    zoffset = -(zNear + particles_radius * 10);
+    depth = (no_particles + 1) * particles_horizontal_separation;
+    zFar = -(depth + zNear);
+    fovx = 90.0;
 }
 
 
@@ -48,33 +51,33 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef((GLdouble)i - offset, - offset, -zoffset);
+        glTranslatef((GLdouble)i * 0.01 , 0.0, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(1.0, 0.0, 0.0);
 
-        glutSolidCube(1.0);
+        glutSolidCube(0.001);
     }
 
     for (int i = -50; i <= 50; i++)
     {
         glLoadIdentity();
 
-        glTranslatef(- offset, (GLdouble)i - offset, -zoffset);
+        glTranslatef(0.0, (GLdouble)i * 0.01, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 1.0, 0.0);
 
-        glutSolidCube(1.0);
+        glutSolidCube(0.001);
     }
 
-    for (int i = -50; i <= 50; i++)
+    for (int i = 0; i <= 50; i++)
     {
         glLoadIdentity();
 
-        glTranslatef(- offset, - offset, (GLdouble)i - zoffset);
+        glTranslatef(0.0, 0.0, (GLdouble)i * 0.01 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 0.0, 1.0);
 
-        glutSolidCube(1.0);
+        glutSolidCube(0.001);
     }
 }
     
@@ -93,13 +96,13 @@ void display()
     //debug_all_particles(particles);
 
     // Se entra en el Loop donde se renderizan los objetos según su posición
-    for (int i = no_particles; i >= 0; i--)
+    for (int i = no_particles - 1; i >= 0; i--)
     {
         glLoadIdentity();
 
         //std::cout << "Se translada partícula " << i + 1 << std::endl; 
         //debug_particle(particles[i]);
-        glTranslatef(particles[i].pos.x, particles[i].pos.y, -particles[i].pos.z - 10.0);
+        glTranslatef(particles[i].pos.x, particles[i].pos.y, particles[i].pos.z + zoffset);
         //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
         glScalef(1.0, 1.0, 1.0);
         double grey_color = particles[i].grey_scale;
@@ -122,13 +125,14 @@ void timer(int)
 {
     //debug("Se entra en la función TIMER.");
 
-    glutTimerFunc(1, timer, 0);
+    glutTimerFunc((int)(1000 / simulator_fps), timer, 0);
 
-    for (Pendel &particle : particles)
+    for (int i = 0; i < no_particles; i++)
     {
-        particle.fast_process(current_time);
+        particles[i].fast_process(current_time);
     }
-
+    
+    // debug_all_particles(particles);
     current_time += dt;
 
     glutPostRedisplay();
@@ -160,7 +164,7 @@ void reshape(int x, int y)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    gluPerspective(80.0, (GLdouble)x / (GLdouble)y, zNear, zFar);
+    gluPerspective(fovx, (GLdouble)x / (GLdouble)y, zNear, zFar);
 
     glMatrixMode(GL_MODELVIEW);
     // debug("Se sale de la función RESHAPE.");

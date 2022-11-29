@@ -48,11 +48,11 @@ class Vector3
             return normalized_vector;
         }
 
-        double *array()
-        {
-            double array_vector[3] = {this -> x, this -> y, this -> z};
-            return array_vector;
-        }
+        // double *array()
+        // {
+        //     //double array_vector[3] = {this -> x, this -> y, this -> z};
+        //     return 0.1;
+        // }
 
 
         // Operaciones entre vectores
