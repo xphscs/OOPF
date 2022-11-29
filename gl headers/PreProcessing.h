@@ -31,7 +31,7 @@ GLdouble zoffset = 0.1;
 void set_perspective()
 {
     zNear = 0.01;
-    zoffset = -(zNear + particles_radius * 10);
+    zoffset = -(zNear + (particles_radius * 10) + (no_particles * particles_vertical_separation));
     depth = (no_particles + 1) * particles_horizontal_separation;
     zFar = -(depth + zNear);
     fovx = 90.0;
@@ -41,8 +41,6 @@ void set_perspective()
 // Función de debug. Crea un plano cartesiano 3D para ver el comportamiento de las bolas de una forma más precisa
 void debug_cartesian_plane()
 {
-    glMatrixMode(GL_MODELVIEW);
-    glClear(GL_COLOR_BUFFER_BIT);
 
     GLdouble offset = 0.0;
     
@@ -111,9 +109,10 @@ void display()
         glutSolidSphere(particles_radius, 20, 20);
     }
 
-    //debug_cartesian_plane();
-
     glLoadIdentity();
+    debug_cartesian_plane();
+
+    //glLoadIdentity();
     glutSwapBuffers();
 
     //debug("Se sale de la función DISPLAY.");
@@ -137,7 +136,7 @@ void timer(int)
 
     glutPostRedisplay();
 
-    //debug("Se sale de la función TIMER.");
+    // debug("Se sale de la función TIMER.");
 }
 
 

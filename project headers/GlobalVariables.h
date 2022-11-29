@@ -5,13 +5,13 @@
 #include <cmath>
 
 double initial_angle = 1.0;                     // Valores de las condiciones iniciales
-double initial_rope_lenght = 5.0;
+double initial_rope_lenght = 1.0;
 double initial_amplitude = 0.1;
 
 unsigned int no_particles = 10;                 // Forma del simulador
 double particles_horizontal_separation = 0.05;   
-double particles_vertical_separation = 0.01;
-double particles_radius = 0.015;
+double particles_vertical_separation = 0.035;
+double particles_radius = 0.02;
 double particles_mass = 1.0;
 
 double time_speed = 1.0;                        // Velocidad del simulador
@@ -20,7 +20,7 @@ double dt = 1.0 / simulator_fps;
 double current_time = 0.0;
 
 double gravity = 9.81;                          // Valores universales del simulador
-double air_resistance = 0.0;
+double air_resistance = 0.0000006;
 double damping_factor = air_resistance / (2 * particles_mass);
 
 
