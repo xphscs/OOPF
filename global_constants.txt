@@ -1,0 +1,32 @@
+(Separar los valores de sus nombres usando \n)
+
+// VARIABLES GENERALES DEL SIMULADOR
+
+no_particles:
+10
+initial_amplitude:
+0.1
+initial_rope_lenght:
+1.0
+air_resistance:
+0.0
+time_speed:
+1.0
+
+// VARIBLES SOBRE LA FORMA DEL SIMULADOR
+
+no_min_oscillations:
+50
+no_max_oscillations:
+60
+ciclying_time:
+120.0
+
+// VARIABLES FÍSICAS
+
+particles_mass:
+1.0
+gravity:
+9.81
+particles_radius:
+0.02

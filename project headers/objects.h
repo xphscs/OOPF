@@ -30,7 +30,7 @@ class Pendel
         double x_amplitude, y_amplitude;
         double omega;
 
-        double max_y = sqrt(pow(initial_rope_lenght + ((no_particles - 1) * particles_vertical_separation), 2) - pow(initial_amplitude, 2));
+        double max_y = separation_function(0);
 
         Pendel(double pangle, double prope_lenght, int n)
         {
