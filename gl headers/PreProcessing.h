@@ -22,7 +22,8 @@ GLfloat fovx;
 GLdouble plane_offset = 1.0;
 
 // Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
-GLdouble zoffset = 0.1;
+GLdouble zoffset = 0.1;\
+GLdouble yoffset;
 
 // FUNCIONES DE PREPROCESAMIENTO DE LOS PARÁMETROS
 
@@ -31,10 +32,11 @@ GLdouble zoffset = 0.1;
 void set_perspective()
 {
     zNear = 0.01;
-    zoffset = -(zNear + (particles_radius * 10) + (no_particles * particles_vertical_separation));
     depth = (no_particles + 1) * particles_horizontal_separation;
     zFar = -(depth + zNear);
     fovx = 90.0;
+    zoffset = -((no_particles * particles_radius) * (zNear * separation_function(0))) - separation_function(0);
+    yoffset = -( (separation_function(0) - separation_function(no_particles)) / 2 ) - ((fovx + no_particles)/ (no_particles * fovx));
 }
 
 
@@ -100,7 +102,7 @@ void display()
 
         //std::cout << "Se translada partícula " << i + 1 << std::endl; 
         //debug_particle(particles[i]);
-        glTranslatef(particles[i].pos.x, particles[i].pos.y, particles[i].pos.z + zoffset);
+        glTranslatef(particles[i].pos.x, particles[i].pos.y + yoffset, particles[i].pos.z + zoffset);
         //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
         glScalef(1.0, 1.0, 1.0);
         double grey_color = particles[i].grey_scale;
