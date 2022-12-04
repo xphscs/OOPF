@@ -29,4 +29,9 @@ particles_mass:
 gravity:
 9.81
 particles_radius:
-0.005
+0.01
+
+
+// VARIABLES DE PERSPECTIVA
+camera_view:
+1

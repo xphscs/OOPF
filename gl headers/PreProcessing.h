@@ -108,24 +108,44 @@ void display()
     //debug_all_particles(particles);
 
     // Se entra en el Loop donde se renderizan los objetos según su posición
-    for (int i = no_particles - 1; i >= 0; i--)
+    if (camera_view == 0)
     {
-        glLoadIdentity();
+        for (int i = no_particles - 1; i >= 0; i--)
+        {
+            glLoadIdentity();
 
-        //std::cout << "Se translada partícula " << i + 1 << std::endl; 
-        //debug_particle(particles[i]);
-        glTranslatef(particles[i].pos.x, particles[i].pos.y + yoffset, particles[i].pos.z + zoffset);
-        //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
-        glScalef(1.0, 1.0, 1.0);
-        double grey_color = particles[i].grey_scale;
-        glColor3f(grey_color, grey_color, grey_color);
+            //std::cout << "Se translada partícula " << i + 1 << std::endl; 
+            //debug_particle(particles[i]);
+            glTranslatef(particles[i].pos.x, particles[i].pos.y + yoffset, particles[i].pos.z + zoffset);
+            //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
+            glScalef(1.0, 1.0, 1.0);
+            double grey_color = particles[i].grey_scale;
+            glColor3f(grey_color, grey_color, grey_color);
 
-        glutSolidSphere(particles_radius, 20, 20);
+            glutSolidSphere(particles_radius, 20, 20);
 
+        }
+    } else {
+        // std::cout << "Frontal camera." << std::endl;
+        for (int i = no_particles - 1; i >= 0; i--)
+        {
+            glLoadIdentity();
+
+            //std::cout << "Se translada partícula " << i + 1 << std::endl; 
+            //debug_particle(particles[i]);
+            glTranslatef(-particles[i].pos.z - (depth / 2.0), particles[i].pos.x, zoffset);
+            //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
+            glScalef(1.0, 1.0, 1.0);
+            double grey_color = particles[i].grey_scale;
+            glColor3f(grey_color, grey_color, grey_color);
+
+            glutSolidSphere(particles_radius, 20, 20);
+
+        }
     }
 
     glLoadIdentity();
-    debug_cartesian_plane();
+    // debug_cartesian_plane();
     // debug_all_particles(particles);
     // debug_particles_perspective(particles);
 
