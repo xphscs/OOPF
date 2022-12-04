@@ -35,6 +35,8 @@ double zFar;
 float depth;
 float fovx;
 
+int camera_view = 0;
+
 // Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
 double zoffset;\
 double yoffset;
@@ -67,6 +69,8 @@ void write_global_values(string param, char *value)
 
 	if (param == "gravity" || param == "-g") { gravity = atof(value); return; }
     if (param == "air_resistance" || param == "-ar") {air_resistance = atof(value); return;}
+
+    if (param == "camera_view" || param == "-cv") {camera_view = atoi(value); return;}
 
 	std::cout << "\nParametro " << param << " no conocido. Pruebe con un parametro valido." << std::endl;
     return;
