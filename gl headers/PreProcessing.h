@@ -34,10 +34,11 @@ void get_off(double ar)
 
     // return num / dem;
     double phi = deg_to_rad(fovx);
+    depth = (no_particles * particles_horizontal_separation) + particles_radius;
 
-    zoffset =  ( (separation_function(0)) * ar * zNear) / (std::tan(phi / 2.0) * ar) * std::log10(no_particles);
-    yoffset =  -(separation_function(0) - ( (zoffset*std::tan(phi / 2.0)) / ar));
-    zFar = (depth - zoffset);
+    zFar = ((4.0 / 3.0) * depth) + zNear;
+    zoffset = -(zNear + ((zFar - zNear) / 3.0));
+    yoffset =  -(separation_function(0) - ((zoffset * std::tan(fovx / 2.0)) / ar));
 }
 
 // Esta función se llama después de procesar los datos de consola en la función Init. Crea la perspectiva del mundo.
@@ -62,7 +63,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef((GLdouble)i * 0.01 , 0.0, 0.0 + zoffset);
+        glTranslatef((GLdouble)i * 0.01 , 0.0 + yoffset, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(1.0, 0.0, 0.0);
 
@@ -73,7 +74,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef(0.0, (GLdouble)i * 0.01, 0.0 + zoffset);
+        glTranslatef(0.0, (GLdouble)i * 0.01 + yoffset, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 1.0, 0.0);
 
@@ -84,7 +85,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef(0.0, 0.0, (GLdouble)i * 0.01 + zoffset);
+        glTranslatef(0.0, 0.0 + yoffset, (GLdouble)i * 0.01 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 0.0, 1.0);
 
