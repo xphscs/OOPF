@@ -34,10 +34,11 @@ void get_off(double ar)
 
     // return num / dem;
     double phi = deg_to_rad(fovx);
+    depth = (no_particles * particles_horizontal_separation) + particles_radius;
 
-    zoffset =  ( (separation_function(0)) * ar * zNear) / (std::tan(phi / 2.0) * ar) * std::log10(no_particles);
-    yoffset =  -(separation_function(0) - ( (zoffset*std::tan(phi / 2.0)) / ar));
-    zFar = (depth - zoffset);
+    zFar = ((4.0 / 3.0) * depth) + zNear;
+    zoffset = -(zNear + ((zFar - zNear) / 3.0));
+    yoffset =  -(separation_function(0) - ((zoffset * std::tan(fovx / 2.0)) / ar));
 }
 
 // Esta función se llama después de procesar los datos de consola en la función Init. Crea la perspectiva del mundo.
@@ -62,7 +63,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef((GLdouble)i * 0.01 , 0.0, 0.0 + zoffset);
+        glTranslatef((GLdouble)i * 0.01 , 0.0 + yoffset, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(1.0, 0.0, 0.0);
 
@@ -73,7 +74,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef(0.0, (GLdouble)i * 0.01, 0.0 + zoffset);
+        glTranslatef(0.0, (GLdouble)i * 0.01 + yoffset, 0.0 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 1.0, 0.0);
 
@@ -84,7 +85,7 @@ void debug_cartesian_plane()
     {
         glLoadIdentity();
 
-        glTranslatef(0.0, 0.0, (GLdouble)i * 0.01 + zoffset);
+        glTranslatef(0.0, 0.0 + yoffset, (GLdouble)i * 0.01 + zoffset);
         glScalef(1.0, 1.0, 1.0);
         glColor3f(0.0, 0.0, 1.0);
 
@@ -107,24 +108,44 @@ void display()
     //debug_all_particles(particles);
 
     // Se entra en el Loop donde se renderizan los objetos según su posición
-    for (int i = no_particles - 1; i >= 0; i--)
+    if (camera_view == 0)
     {
-        glLoadIdentity();
+        for (int i = no_particles - 1; i >= 0; i--)
+        {
+            glLoadIdentity();
 
-        //std::cout << "Se translada partícula " << i + 1 << std::endl; 
-        //debug_particle(particles[i]);
-        glTranslatef(particles[i].pos.x, particles[i].pos.y + yoffset, particles[i].pos.z + zoffset);
-        //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
-        glScalef(1.0, 1.0, 1.0);
-        double grey_color = particles[i].grey_scale;
-        glColor3f(grey_color, grey_color, grey_color);
+            //std::cout << "Se translada partícula " << i + 1 << std::endl; 
+            //debug_particle(particles[i]);
+            glTranslatef(particles[i].pos.x, particles[i].pos.y + yoffset, particles[i].pos.z + zoffset);
+            //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
+            glScalef(1.0, 1.0, 1.0);
+            double grey_color = particles[i].grey_scale;
+            glColor3f(grey_color, grey_color, grey_color);
 
-        glutSolidSphere(particles_radius, 20, 20);
+            glutSolidSphere(particles_radius, 20, 20);
 
+        }
+    } else {
+        // std::cout << "Frontal camera." << std::endl;
+        for (int i = no_particles - 1; i >= 0; i--)
+        {
+            glLoadIdentity();
+
+            //std::cout << "Se translada partícula " << i + 1 << std::endl; 
+            //debug_particle(particles[i]);
+            glTranslatef(-particles[i].pos.z - (depth / 2.0), particles[i].pos.x, zoffset);
+            //std::cout << "Se terminó partícula " << i + 1 << std::endl; 
+            glScalef(1.0, 1.0, 1.0);
+            double grey_color = particles[i].grey_scale;
+            glColor3f(grey_color, grey_color, grey_color);
+
+            glutSolidSphere(particles_radius, 20, 20);
+
+        }
     }
 
     glLoadIdentity();
-    debug_cartesian_plane();
+    // debug_cartesian_plane();
     // debug_all_particles(particles);
     // debug_particles_perspective(particles);
 
