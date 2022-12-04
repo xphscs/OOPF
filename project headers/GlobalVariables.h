@@ -11,9 +11,9 @@ double initial_rope_lenght = 1.0;
 double initial_amplitude = 0.1;
 
 unsigned int no_particles = 10;                 // Forma del simulador
-double particles_horizontal_separation = 0.05;   
-double particles_vertical_separation = 0.035;
 double particles_radius = 0.02;
+double particles_horizontal_separation = particles_radius * 2.0;   
+double particles_vertical_separation = 0.035;
 double particles_mass = 1.0;
 
 double time_speed = 1.0;                        // Velocidad del simulador
@@ -28,6 +28,16 @@ double treshold = 0.00001;
 int no_min_oscillations = 50;
 int no_max_oscillations = 65;
 double ciclying_time = 120.0;
+
+// Variables de perspectiva
+double zNear;
+double zFar;
+float depth;
+float fovx;
+
+// Vaiable de offset en z. Modifica qué tan lejos queremos ver el montaje
+double zoffset;\
+double yoffset;
 
 
 using std::atoi;                                // Funciones de cambio de string a numéricos
@@ -50,7 +60,7 @@ void write_global_values(string param, char *value)
 	if (param == "no_particles" || param == "-np") { no_particles = atoi(value); return; }
     if (param == "particles_horizontal_separation" || param == "-phs") {particles_horizontal_separation = atof(value); return;}
     if (param == "particles_vertical_separation" || param == "-pvs") {particles_vertical_separation = atof(value); return;}
-    if (param == "particles_radius" || param == "-rd") { particles_radius = atof(value); return; }
+    if (param == "particles_radius" || param == "-rd") { particles_radius = atof(value); particles_horizontal_separation = particles_radius * 2.0; return; }
     if (param == "particles_mass" || param == "-pm") {particles_mass = atof(value); return;}
 
     if (param == "time_speed" || param == "-ts") {time_speed = atof(value); dt = (1.0 / (double)simulator_fps) * time_speed; return;}
@@ -137,6 +147,15 @@ bool process_global_values(int argc, char **argv)
 double separation_function(int n)
 {
     double pi = 3.14159265358;
+    double twopi = 2.0 * pi;
+    return -gravity * pow((ciclying_time) / (twopi * (no_min_oscillations + n)), 2);
+}
+    
+
+// Función de separación alternativa
+double alt_separation_function(int n)
+{
+    double pi = 3.14159265358;
     double twopi = 2 * pi;
-    return gravity * pow((ciclying_time) / (twopi * (no_min_oscillations + n)), 2);
+    return -(1.0 + particles_radius * n);
 }

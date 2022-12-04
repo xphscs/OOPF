@@ -3,13 +3,13 @@
 // VARIABLES GENERALES DEL SIMULADOR
 
 no_particles:
-12
+10
 initial_amplitude:
 0.1
 initial_rope_lenght:
 1.0
 air_resistance:
-0.1
+0.0
 time_speed:
 1.0
 
@@ -20,7 +20,7 @@ no_min_oscillations:
 no_max_oscillations:
 60
 ciclying_time:
-60.0
+120.0
 
 // VARIABLES FÍSICAS
 
@@ -29,4 +29,4 @@ particles_mass:
 gravity:
 9.81
 particles_radius:
-0.02
+0.005

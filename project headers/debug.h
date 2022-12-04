@@ -43,3 +43,19 @@ void debug_all_particles(std::vector<Pendel> particles)
     cout << endl;
 }
 
+void debug_perspective()
+{
+    cout << "zNear: " << zNear << endl;
+    cout << "zFar: " << zFar << endl;
+    cout << "fov: " << fovx << endl;
+    cout << "yoffset: " << yoffset << endl;
+    cout << "zoffset: " << zoffset << endl;
+}
+
+void debug_particles_perspective(std::vector<Pendel> particles)
+{
+    for (Pendel part : particles)
+    {
+        cout << "particle " << part.particle_n << ":\t" << part.pos.x << "\t" << part.pos.y + yoffset << "\t" << part.pos.z + zoffset << endl;
+    }
+}

@@ -30,26 +30,30 @@ class Pendel
         double x_amplitude, y_amplitude;
         double omega;
 
+        int particle_n;
+
         double max_y = separation_function(0);
 
         Pendel(double pangle, double prope_lenght, int n)
         {
             // Creo la longitud de la cuerda según el número del péndulo. De momento se tiene un crecimiento lineal, pero pienso agregar un crecimiento con diferentes funciones
             // this -> rope_lenght = prope_lenght + (particles_vertical_separation * (double)n);
-            this -> rope_lenght = separation_function(n);
+            this -> rope_lenght = -separation_function(n);
+
+            this -> particle_n = n;
 
             // -> pos.x = this -> x_amplitude = rope_lenght * sin(this -> angle);
             //  this -> pos.y = this -> y_amplitude = rope_lenght * cos(this -> angle) - (particles_vertical_separation * n);
             this -> pos.x = this -> x_amplitude = initial_amplitude;
-            this -> pos.y = max_y - sqrt(pow(this -> rope_lenght, 2) - pow(this -> x_amplitude, 2));
-            this -> pos.z = -(n + 1) * particles_horizontal_separation;
+            this -> pos.y = - sqrt(pow(this -> rope_lenght, 2) - pow(this -> x_amplitude, 2));
+            this -> pos.z = -(n) * particles_horizontal_separation;
 
             this -> angle = asin(this -> x_amplitude / this -> rope_lenght);
             this -> omega = sqrt( (gravity / this -> rope_lenght) - pow(damping_factor, 2) );
 
             this -> grey_scale = ((double)(n + 1)/ (double)no_particles) / 2.0;
 
-            std::cout << n << " with a rope of: " << this -> rope_lenght  << std::endl;
+            //std::cout << n << " with a omega of: " << this -> omega  << std::endl;
         }
 
 
@@ -57,5 +61,6 @@ class Pendel
         void fast_process(double time)
         {
             this -> pos.x = exp(-damping_factor * time) * this -> x_amplitude * cos(this -> omega * time);
+            //std::cout << this -> pos.x << std::endl;
         }
 };
