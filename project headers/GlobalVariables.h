@@ -29,11 +29,15 @@ int no_min_oscillations = 50;
 int no_max_oscillations = 65;
 double ciclying_time = 120.0;
 
+int sep_fun = 0;
+
 // Variables de perspectiva
 double zNear;
 double zFar;
 float depth;
 float fovx;
+
+double forced_zoffset = 0.0;
 
 int camera_view = 0;
 
@@ -71,6 +75,9 @@ void write_global_values(string param, char *value)
     if (param == "air_resistance" || param == "-ar") {air_resistance = atof(value); return;}
 
     if (param == "camera_view" || param == "-cv") {camera_view = atoi(value); return;}
+    if (param == "forced_zoffset" || param == "-fzo") {forced_zoffset = atof(value); return;}
+
+    if (param == "-sf") {sep_fun = atoi(value); return;}
 
 	std::cout << "\nParametro " << param << " no conocido. Pruebe con un parametro valido." << std::endl;
     return;
@@ -152,14 +159,12 @@ double separation_function(int n)
 {
     double pi = 3.14159265358;
     double twopi = 2.0 * pi;
-    return -gravity * pow((ciclying_time) / (twopi * (no_min_oscillations + n)), 2);
+    return -gravity * pow((ciclying_time) / (twopi * (no_min_oscillations + (n))), 2);
 }
     
 
 // Función de separación alternativa
 double alt_separation_function(int n)
 {
-    double pi = 3.14159265358;
-    double twopi = 2 * pi;
-    return -(1.0 + particles_radius * n);
+    return -((particles_radius * (n + 1)) + initial_rope_lenght);
 }

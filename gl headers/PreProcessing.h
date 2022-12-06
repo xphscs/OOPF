@@ -36,9 +36,15 @@ void get_off(double ar)
     double phi = deg_to_rad(fovx);
     depth = (no_particles * particles_horizontal_separation) + particles_radius;
 
-    zFar = ((4.0 / 3.0) * depth) + zNear;
+    zFar = ((4.0 / 3.0) * (depth)) + zNear;
     zoffset = -(zNear + ((zFar - zNear) / 3.0));
-    yoffset =  -(separation_function(0) - ((zoffset * std::tan(fovx / 2.0)) / ar));
+
+    if (sep_fun == 0)
+    {
+        yoffset =  -(separation_function(0) - ((zoffset * std::tan(fovx / 2.0)) / ar));
+    } else {
+        yoffset =  -(alt_separation_function(0) - ((zoffset * std::tan(fovx / 2.0)) / ar));;
+    }
 }
 
 // Esta función se llama después de procesar los datos de consola en la función Init. Crea la perspectiva del mundo.
@@ -203,6 +209,7 @@ void reshape(int x, int y)
     gluPerspective(90.0, (GLdouble)x / (GLdouble)y, zNear, zFar);
 
     glMatrixMode(GL_MODELVIEW);
-    debug_perspective();
+    // debug_perspective();
+    //debug_all_particles(particles);
     // debug("Se sale de la función RESHAPE.");
 }

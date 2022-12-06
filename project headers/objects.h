@@ -40,6 +40,13 @@ class Pendel
             // this -> rope_lenght = prope_lenght + (particles_vertical_separation * (double)n);
             this -> rope_lenght = -separation_function(n);
 
+            if (sep_fun == 0)
+            {
+                rope_lenght = -separation_function(n);
+            } else {
+                rope_lenght = -alt_separation_function(n);
+            }
+
             this -> particle_n = n;
 
             // -> pos.x = this -> x_amplitude = rope_lenght * sin(this -> angle);
@@ -53,7 +60,7 @@ class Pendel
 
             this -> grey_scale = ((double)(n + 1)/ (double)no_particles) / 2.0;
 
-            //std::cout << n << " with a omega of: " << this -> omega  << std::endl;
+            // std::cout << n << " with a y of: " << this -> pos.y  << std::endl;
         }
 
 

@@ -35,3 +35,5 @@ particles_radius:
 // VARIABLES DE PERSPECTIVA
 camera_view:
 0
+forced_zoffset:
+0.0

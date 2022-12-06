@@ -24,8 +24,6 @@ vector<Pendel> particles;                      // Creo el arreglo que guardará 
 #include "gl headers\GLIncludes.h"             // Incluyo los headers de OpenGL 
 
 
-
-
 int main(int cargs, char **vargs)
 {
     // Proceso los valores ingresados por consola
